@@ -6,7 +6,7 @@ import torch.nn.functional as F
 from matplotlib import pyplot as plt
 from torch.utils import data
 import lpips
-os.environ['TORCH_HOME']='/home/Ling.cf/HHD/conda/miniconda3/torch-model'
+os.environ['TORCH_HOME']='/home/user/HHD/conda/miniconda3/torch-model'
 
 def visualization(feature_maps, mean=True):
     if mean == True:
