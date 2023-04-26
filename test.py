@@ -5,7 +5,7 @@ from PPNV2 import PPNv2
 import cv2
 from skimage.metrics import structural_similarity, peak_signal_noise_ratio
 from utils import MyDataset, util_of_lpips
-os.environ['TORCH_HOME']='/home/Ling.cf/HHD/conda/miniconda3/torch-model'
+os.environ['TORCH_HOME']='/home/user/HHD/conda/miniconda3/torch-model'
 
 def show_muti_img(imgs, targets):
     pre_imgs = []
@@ -51,7 +51,7 @@ def data_process(pred, tar):
 def test_model():
     dataset = 'Caltech'
     merge_style = 'modulate'
-    test_data='/mnt/DevFiles_NAS/Ling.cf/dataset/{}/test'.format(dataset)                          # the path where validation data is stored
+    test_data='/mnt/DevFiles_NAS/user/dataset/{}/test'.format(dataset)                          # the path where validation data is stored
     state_path='./models/{}/pix_{}_DSC_3_big_{}.pt'.format(dataset, dataset, merge_style)        # the path where model state is stored
     num_pre=10                              # the number of time steps in the long term prediction
     show_img=True                           # bool: show image or not (set the batch_size to 1 first if True)
