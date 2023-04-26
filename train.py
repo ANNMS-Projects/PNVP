@@ -9,15 +9,15 @@ import random
 from utils import MyDataset, util_of_lpips
 from torch.utils.data import dataloader
 # torch.autograd.set_detect_anomaly(True)
-os.environ['TORCH_HOME'] = '/home/Ling.cf/HHD/conda/miniconda3/torch-model'
+os.environ['TORCH_HOME'] = '/home/user/HHD/conda/miniconda3/torch-model'
 
 
 class Training():
     def __init__(self):
         self.dataset =    'Caltech'
         self.MergeStyle = 'modulate'
-        self.train_path = '/mnt/DevFiles_NAS/Ling.cf/dataset/{}/train'.format(self.dataset)
-        self.val_path =   '/mnt/DevFiles_NAS/Ling.cf/dataset/{}/val'.format(self.dataset)
+        self.train_path = '/mnt/DevFiles_NAS/user/dataset/{}/train'.format(self.dataset)
+        self.val_path =   '/mnt/DevFiles_NAS/user/dataset/{}/val'.format(self.dataset)
         self.tag =        '{}_DSC_3_big_{}.pt'.format(self.dataset, self.MergeStyle)
         self.retrain =    False
         self.num_epoch =  50
