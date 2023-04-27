@@ -6,9 +6,9 @@ import torch
 import torch.nn.functional as F
 
 
-class PPNv2(nn.Module):
+class PNVPNet(nn.Module):
     def __init__(self, channels, hidden_channels, merge_style='modulate'):
-        super(PPNv2, self).__init__()
+        super(PNVPNet, self).__init__()
         self.num_layers = len(channels)
         self.channels = channels
         self.hidden_channels = hidden_channels
@@ -224,7 +224,7 @@ if __name__ == '__main__':
     import os
     os.environ["CUDA_VISIBLE_DEVICES"] = "{}".format(rank)
     channels = (3, 64, 64, 256, 256, 512)
-    model = PPNv2(channels, channels)
+    model = PNVPNet(channels, channels)
     model = model.to(0)
     optim = torch.optim.Adam(model.parameters(), lr=0.01)
     for i in range(10):
