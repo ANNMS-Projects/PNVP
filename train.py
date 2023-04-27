@@ -1,7 +1,7 @@
 import os
 import numpy as np
 import torch
-from PPNV2 import PPNv2
+from PNVP import PNVPNet
 import datetime
 # from torch.cuda.amp import autocast, GradScaler
 from skimage.metrics import structural_similarity, peak_signal_noise_ratio
@@ -93,7 +93,7 @@ class Training():
         acc_path = './metric/{}/Acc_{}'.format(self.dataset, self.tag)  # storage path for all precision (every epoch)
 
         # setup model and optimizer
-        model = PPNv2(channels=(3, 64, 128, 256, 512, 512), hidden_channels=(3, 64, 128, 256, 512, 512),
+        model = PNVPNet(channels=(3, 64, 128, 256, 512, 512), hidden_channels=(3, 64, 128, 256, 512, 512),
                       merge_style=self.MergeStyle).to(rank)
         optimizer = torch.optim.Adam(model.parameters(), lr=0.00005, weight_decay=0.00001)
         # scaler = GradScaler()
