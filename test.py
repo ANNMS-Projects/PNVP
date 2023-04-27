@@ -1,7 +1,7 @@
 import os
 import numpy as np
 import torch
-from PPNV2 import PPNv2
+from PNVP import PNVPNet
 import cv2
 from skimage.metrics import structural_similarity, peak_signal_noise_ratio
 from utils import MyDataset, util_of_lpips
@@ -57,7 +57,7 @@ def test_model():
     show_img=True                           # bool: show image or not (set the batch_size to 1 first if True)
     LenInput = 10                           # length of input sequence
 
-    model = PPNv2(channels=(3, 64, 128, 256, 512, 512), hidden_channels=(3, 64, 128, 256, 512, 512), merge_style=merge_style)
+    model = PNVPNet(channels=(3, 64, 128, 256, 512, 512), hidden_channels=(3, 64, 128, 256, 512, 512), merge_style=merge_style)
     model = model.to(0)
     checkpoint = torch.load(state_path, map_location='cuda:{}'.format(0))
     model.load_state_dict(checkpoint['model_state'])
