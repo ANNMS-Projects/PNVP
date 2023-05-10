@@ -98,22 +98,25 @@ class UpPropagate(nn.Module):
         return x
 
 class ZeroInterpolate(nn.Module):
-    def __init__(self, channels):
+    def __init__(self, channels, initialize=True):
         super(ZeroInterpolate, self).__init__()
-
-        self.weight = torch.tensor(
-            [[0.0347, 0.0498, 0.0502, 0.0599, 0.0502, 0.0498, 0.0347],
-             [0.0498, 0., 0.0804, 0., 0.0804, 0., 0.0498],
-             [0.0502, 0.0804, 0.1122, 0.1797, 0.1122, 0.0804, 0.0502],
-             [0.0599, 0., 0.1797, 1., 0.1797, 0., 0.0599],
-             [0.0502, 0.0804, 0.1122, 0.1797, 0.1122, 0.0804, 0.0502],
-             [0.0498, 0., 0.0804, 0., 0.0804, 0., 0.0498],
-             [0.0347, 0.0498, 0.0502, 0.0599, 0.0502, 0.0498, 0.0347]],
-            requires_grad=True,
-            dtype=torch.float
-        )
-        self.weight = self.weight.reshape(1, 1, 7, 7).repeat(channels, 1, 1, 1)
-        self.weight = nn.Parameter(self.weight)
+        if initialize:
+            weight = torch.tensor(
+                [[0.0347, 0.0498, 0.0502, 0.0599, 0.0502, 0.0498, 0.0347],
+                 [0.0498, 0., 0.0804, 0., 0.0804, 0., 0.0498],
+                 [0.0502, 0.0804, 0.1122, 0.1797, 0.1122, 0.0804, 0.0502],
+                 [0.0599, 0., 0.1797, 1., 0.1797, 0., 0.0599],
+                 [0.0502, 0.0804, 0.1122, 0.1797, 0.1122, 0.0804, 0.0502],
+                 [0.0498, 0., 0.0804, 0., 0.0804, 0., 0.0498],
+                 [0.0347, 0.0498, 0.0502, 0.0599, 0.0502, 0.0498, 0.0347]],
+                requires_grad=True,
+                dtype=torch.float
+            )
+            weight = self.weight.reshape(1, 1, 7, 7).repeat(channels, 1, 1, 1)
+        else:
+            weight = torch.empty(channels, 1, 7, 7)
+            weight = nn.init.kaiming_uniform_(weight, mode='fan_in', nonlinearity='relu')
+        self.weight = nn.Parameter(weight)
         self.channels = channels
 
         self.relu = nn.LeakyReLU(inplace=True)
@@ -136,7 +139,7 @@ class DownPropagate(nn.Module):
     def __init__(self, in_channel, out_channel, pad_mode):
         super(DownPropagate, self).__init__()
         # self.upsample = nn.Upsample(scale_factor=2, mode='bilinear', align_corners=True)
-        self.upsample = ZeroInterpolate(channels=in_channel)
+        self.upsample = ZeroInterpolate(channels=in_channel, initialize=True)
         self.DS = nn.Conv2d(in_channel, in_channel, kernel_size=(3, 3), padding=1, padding_mode=pad_mode)
         self.CST = nn.Conv2d(in_channel, out_channel, kernel_size=(3, 3), padding=1, padding_mode=pad_mode)
         self.relu = nn.LeakyReLU(inplace=True)
