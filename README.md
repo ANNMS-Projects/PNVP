@@ -19,7 +19,7 @@ Please download and process the relevant datasets first. In order to save time, 
 * FIRTorch.py, Using pytorch as a platform to implement a low-pass filter with learnable cutoff frequency
 * NetworkBlock.py, implementation of the modulation module and upsampling, downsampling artifacts
 * ConvLSTM.py, implementation of the convolutioinal LSTM unit
-* PPNV2.py, implementation of the complete pyramidal predictive network
+* PNVP.py, implementation of the complete predictive network
 
 ### Training and Testing
 * train.py, for training
